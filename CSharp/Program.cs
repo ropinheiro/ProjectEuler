@@ -33,7 +33,7 @@ namespace ProjectEuler
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine($"Found {solver.NumberOfProblemsSolved} problems solved.");
             Console.WriteLine("----------------------------------------------------------------");
-            Console.WriteLine("  ID |  Solution  | Elapsed Time | Title");
+            Console.WriteLine("  ID  |  Solution  | OK? |   Time   |  Title");
             Console.WriteLine("----------------------------------------------------------------");
         }
 
@@ -60,10 +60,11 @@ namespace ProjectEuler
         static void WriteResult(ProblemInfo problem, SolutionInfo solution)
         {
             string problemNumber = solution.ProblemNumber.ToString().PadLeft(4, ' ');
-            string problemSolutionText = GetProblemSolutionText(solution);
-            string executionTimeText = GetExecutionTimeText(solution.ExecutionTimeInMs);
+            string problemSolution = GetProblemSolutionText(solution);
+            string correctness = GetCorrectnessText(solution);
+            string executionTime = GetExecutionTimeText(solution);
 
-            Console.WriteLine($"{problemNumber} | {problemSolutionText} | {executionTimeText} | {problem.Title}");
+            Console.WriteLine($"{problemNumber}  | {problemSolution}  | {correctness}  | {executionTime} | {problem.Title}");
         }
 
         static string GetProblemSolutionText(SolutionInfo solution)
@@ -72,32 +73,55 @@ namespace ProjectEuler
 
             if (solution.Skipped)
             {
-                problemSolutionText = "SKIPPED";
+                problemSolutionText = "- SKIP -";
             }
             else
             {
                 problemSolutionText = solution.ProblemSolution.ToString();
             }
 
-            return problemSolutionText.PadLeft(10, ' ');
+            return problemSolutionText.PadLeft(9, ' ');
         }
 
-        static string GetExecutionTimeText(long executionTimeInMs)
+        static string GetCorrectnessText(SolutionInfo solution)
         {
-            bool useSecondsInstead = executionTimeInMs > 1000;
+            string correctnessText;
 
-            string executionTimeText;
-
-            if (useSecondsInstead)
+            if (solution.Skipped)
             {
-                executionTimeText = (executionTimeInMs / 1000).ToString() + " s";
+                correctnessText = "-";
             }
             else
             {
-                executionTimeText = executionTimeInMs.ToString() + " ms";
+                correctnessText = solution.SolutionIsCorrect ? "V" : "X";
             }
 
-            return executionTimeText.PadLeft(9, ' ');
+            return correctnessText.PadLeft(2, ' ');
+        }
+
+        static string GetExecutionTimeText(SolutionInfo solution)
+        {
+            string executionTimeText;
+
+            if (solution.Skipped)
+            {
+                executionTimeText = "--- ms";
+            }
+            else
+            {
+                bool useSecondsInstead = solution.ExecutionTimeInMs > 1000;
+
+                if (useSecondsInstead)
+                {
+                    executionTimeText = (solution.ExecutionTimeInMs / 1000).ToString() + " s";
+                }
+                else
+                {
+                    executionTimeText = solution.ExecutionTimeInMs.ToString() + " ms";
+                }
+            }
+
+            return executionTimeText.PadLeft(8, ' ');
         }
     }
 }
