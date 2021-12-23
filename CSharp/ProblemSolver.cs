@@ -1,9 +1,53 @@
 using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectEuler
 {
     public class ProblemSolver
     {
+        public ProblemSolver()
+        {
+            // ## BEGIN OF HACK ##
+            // "Waste" here the time with the reflection overload happening
+            // in the 1st time we call the invoker, so that we do not affect
+            // the measured time of the 1st problem with extra milliseconds.
+            InvokeSolverMethod(1);
+            // ## END OF HACK ##
+        }
+
+        /// <summary>
+        /// Get the number or problems solved so far.
+        /// </summary>
+        /// <returns>The number of methods with "SolveProblem" in the name.</returns>
+        public int GetNumberOfProblemsSolved()
+        {
+            return this
+                .GetType()
+                .GetMethods()
+                .Where(m => m.Name.Contains("SolveProblem"))
+                .Count();
+        }
+
+        /// <summary>
+        /// Solve a problem, calculating the time it takes to execute.
+        /// </summary>
+        /// <param name="problem">A given problem number to solve.</param>
+        /// <returns>The solution to the problem, including execution metrics.</returns>
+        public SolutionInfo Solve(int problem)
+        {
+            SolutionInfo solution = new SolutionInfo(problem);
+
+            var watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+            solution.ProblemSolution = InvokeSolverMethod(problem);
+            watch.Stop();
+
+            solution.ExecutionTimeInMs = watch.ElapsedMilliseconds;
+
+            return solution;
+        }
+
         /// <summary>
         /// Runs the problem solver's method given a problem number.
         /// Expects that there is a method with name "SolveProblemXXXX",
@@ -11,7 +55,7 @@ namespace ProjectEuler
         /// </summary>
         /// <param name="problemNumber">A given problem number.</param>
         /// <returns>The solution of the problem.</returns>
-        public int RunSolver(int problemNumber)
+        private int InvokeSolverMethod(int problemNumber)
         {
             MethodInfo solverMethod = this
                 .GetType()
