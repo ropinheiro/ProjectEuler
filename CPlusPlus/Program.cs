@@ -10,6 +10,7 @@ namespace ProjectEuler
             Console.WriteLine("Results for Euler Project problems:");
             Console.WriteLine("-----------------------------------");
 
+            WriteResult(1, ProblemSolver.SolveProblem0001());
             // Further problem solvers go here.
 
             Console.WriteLine("===================================");
