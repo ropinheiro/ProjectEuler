@@ -1,7 +1,25 @@
+using System.Reflection;
+
 namespace ProjectEuler
 {
-    public static class ProblemSolver
+    public class ProblemSolver
     {
+        /// <summary>
+        /// Runs the problem solver's method given a problem number.
+        /// Expects that there is a method with name "SolveProblemXXXX",
+        /// where XXXX is the problem number left padded with zeros.
+        /// </summary>
+        /// <param name="problemNumber">A given problem number.</param>
+        /// <returns>The solution of the problem.</returns>
+        public int RunSolver(int problemNumber)
+        {
+            MethodInfo solverMethod = this
+                .GetType()
+                .GetMethod($"SolveProblem{problemNumber.ToString().PadLeft(4, '0')}");
+
+            return (int)solverMethod.Invoke(this, null);
+        }
+
         /// <summary>
         /// -------------------------------------------------------------------
         /// Problem 1
@@ -13,7 +31,7 @@ namespace ProjectEuler
         /// -------------------------------------------------------------------
         /// </summary>
         /// <returns>Solution for Project Euler #1</returns>
-        public static int SolveProblem0001()
+        public int SolveProblem0001()
         {
             int sum = 0;
             for (int i = 1; i < 1000; i++)
@@ -39,7 +57,7 @@ namespace ProjectEuler
         /// -------------------------------------------------------------------
         /// </summary>
         /// <returns>Solution for Project Euler #2</returns>
-        public static int SolveProblem0002()
+        public int SolveProblem0002()
         {
             int sum = 0;
             int previousValue1 = 0;
