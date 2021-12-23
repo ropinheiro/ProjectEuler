@@ -11,6 +11,7 @@ namespace ProjectEuler
             Console.WriteLine("-----------------------------------");
 
             WriteResult(1, ProblemSolver.SolveProblem0001());
+            WriteResult(2, ProblemSolver.SolveProblem0002());
             // Further problem solvers go here.
 
             Console.WriteLine("===================================");
