@@ -7,6 +7,12 @@ namespace ProjectEuler
 {
     public class ProblemSolver
     {
+        /// <summary>
+        /// Set this to true if you want to skip problems whose solution is slow to calculate.
+        /// Useful if you want to focus in your current problem without commenting a lot of stuff.
+        /// </summary>
+        const bool SkipSlow = false;
+
         public ProblemSolver()
         {
             // ## BEGIN OF HACK ##
@@ -21,30 +27,45 @@ namespace ProjectEuler
         /// Get the number or problems solved so far.
         /// </summary>
         /// <returns>The number of methods with "SolveProblem" in the name.</returns>
-        public int GetNumberOfProblemsSolved()
+        public int NumberOfProblemsSolved
         {
-            return this
-                .GetType()
-                .GetMethods()
-                .Where(m => m.Name.Contains("SolveProblem"))
-                .Count();
+            get
+            {
+                if (_numberOfProblemsSolved == -1)
+                {
+                    _numberOfProblemsSolved = this
+                        .GetType()
+                        .GetMethods()
+                        .Where(m => m.Name.Contains("SolveProblem"))
+                        .Count();
+                }
+                return _numberOfProblemsSolved;
+            }
         }
+        private int _numberOfProblemsSolved = -1;
 
         /// <summary>
         /// Solve a problem, calculating the time it takes to execute.
         /// </summary>
         /// <param name="problem">A given problem number to solve.</param>
         /// <returns>The solution to the problem, including execution metrics.</returns>
-        public SolutionInfo Solve(int problem)
+        public SolutionInfo Solve(ProblemInfo problem)
         {
-            SolutionInfo solution = new SolutionInfo(problem);
+            if (problem.HasSlowResolution && SkipSlow == true)
+            {
+                return SolutionInfo.GetSkippedSolution(problem.Number);
+            }
+
+            SolutionInfo solution = new SolutionInfo(problem.Number);
 
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
-            solution.ProblemSolution = InvokeSolverMethod(problem);
+            solution.ProblemSolution = InvokeSolverMethod(problem.Number);
             watch.Stop();
 
             solution.ExecutionTimeInMs = watch.ElapsedMilliseconds;
+            solution.Skipped = false;
+            solution.SolutionIsCorrect = (solution.ProblemSolution == problem.ExpectedSolution);
 
             return solution;
         }
@@ -211,7 +232,7 @@ namespace ProjectEuler
 
             // Worst case, we reach 1.
             // That is guaranteed to cause the cycle to stop.
-            while (number % currentTentative != 0 || !IsPrime(currentTentative))
+            while (number % currentTentative != 0 || !Utils.IsPrime(currentTentative))
             {
                 // Why -2? See Hint #1.
                 currentTentative = currentTentative - 2;
@@ -237,21 +258,6 @@ namespace ProjectEuler
             // watch.Stop();
 
             return currentTentative;
-        }
-
-        public static bool IsPrime(long number)
-        {
-            if (number <= 1) return false;
-            if (number == 2) return true;
-            if (number % 2 == 0) return false;
-
-            var boundary = (long)Math.Floor(Math.Sqrt(number));
-
-            for (long i = 3; i <= boundary; i += 2)
-                if (number % i == 0)
-                    return false;
-
-            return true;
         }
     }
 }

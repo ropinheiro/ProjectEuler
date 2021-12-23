@@ -1,39 +1,102 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectEuler
 {
     class Program
     {
+        /// <summary>
+        /// Document your Problems here.
+        /// </summary>
+        static List<ProblemInfo> ProblemDefinitions = new List<ProblemInfo>()
+        {
+            new ProblemInfo() { Number = 1, Title = "Multiples of 3 or 5", HasSlowResolution = false, ExpectedSolution = 233168 },
+            new ProblemInfo() { Number = 2, Title = "Even Fibonacci numbers", HasSlowResolution = false, ExpectedSolution = 4613732 },
+            new ProblemInfo() { Number = 3, Title = "Largest prime factor", HasSlowResolution = true, ExpectedSolution = 6857 }
+        };
+
         static void Main(string[] args)
         {
             ProblemSolver solver = new ProblemSolver();
-            int problemsSolved = solver.GetNumberOfProblemsSolved();
 
-            Console.WriteLine("===================================");
-            Console.WriteLine("Results for Euler Project problems:");
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine($"Found {problemsSolved} problems solved.");
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Problem |  Solution  | Elapsed Time");
-            Console.WriteLine("-----------------------------------");
+            WriteHeader(solver);
 
-            for (int problem = 1; problem <= problemsSolved; problem++)
-            {
-                WriteResult(solver.Solve(problem));
-            }
-            Console.WriteLine("===================================");
+            SolveProblems(solver);
         }
 
-        static void WriteResult(SolutionInfo solution)
+        static void WriteHeader(ProblemSolver solver)
         {
-            string problemNumber =
-                solution.ProblemNumber.ToString().PadLeft(5, ' ');
-            string problemSolution =
-                solution.ProblemSolution.ToString().PadLeft(10, ' ');
-            string executionTimeInMs =
-                solution.ExecutionTimeInMs.ToString().PadLeft(9, ' ');
+            Console.WriteLine("================================================================");
+            Console.WriteLine("Results for Euler Project problems:");
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine($"Found {solver.NumberOfProblemsSolved} problems solved.");
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("  ID |  Solution  | Elapsed Time | Title");
+            Console.WriteLine("----------------------------------------------------------------");
+        }
 
-            Console.WriteLine($"{problemNumber}   | {problemSolution} | {executionTimeInMs} ms");
+        static void SolveProblems(ProblemSolver solver)
+        {
+            for (int problemNumber = 1;
+                 problemNumber <= solver.NumberOfProblemsSolved;
+                 problemNumber++)
+            {
+                ProblemInfo problem = GetProblemInfo(problemNumber);
+                SolutionInfo solution = solver.Solve(problem);
+                WriteResult(problem, solution);
+            }
+            Console.WriteLine("================================================================");
+        }
+
+        static ProblemInfo GetProblemInfo(int problemNumber)
+        {
+            return ProblemDefinitions
+                .Where(p => p.Number == problemNumber)
+                .SingleOrDefault(ProblemInfo.GetUndocumentedProblem(problemNumber));
+        }
+
+        static void WriteResult(ProblemInfo problem, SolutionInfo solution)
+        {
+            string problemNumber = solution.ProblemNumber.ToString().PadLeft(4, ' ');
+            string problemSolutionText = GetProblemSolutionText(solution);
+            string executionTimeText = GetExecutionTimeText(solution.ExecutionTimeInMs);
+
+            Console.WriteLine($"{problemNumber} | {problemSolutionText} | {executionTimeText} | {problem.Title}");
+        }
+
+        static string GetProblemSolutionText(SolutionInfo solution)
+        {
+            string problemSolutionText;
+
+            if (solution.Skipped)
+            {
+                problemSolutionText = "SKIPPED";
+            }
+            else
+            {
+                problemSolutionText = solution.ProblemSolution.ToString();
+            }
+
+            return problemSolutionText.PadLeft(10, ' ');
+        }
+
+        static string GetExecutionTimeText(long executionTimeInMs)
+        {
+            bool useSecondsInstead = executionTimeInMs > 1000;
+
+            string executionTimeText;
+
+            if (useSecondsInstead)
+            {
+                executionTimeText = (executionTimeInMs / 1000).ToString() + " s";
+            }
+            else
+            {
+                executionTimeText = executionTimeInMs.ToString() + " ms";
+            }
+
+            return executionTimeText.PadLeft(9, ' ');
         }
     }
 }
