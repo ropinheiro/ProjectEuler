@@ -15,8 +15,7 @@ My development environment:
 
 Build & Run: 
 1. Open a terminal window in the `~\C\` sub-folder
-2. > `gcc Euler.c -o Euler.exe`
-3. > `.\Euler.exe`
+2. > `gcc *.c -o Euler ; ./Euler`
 
 --- 
 

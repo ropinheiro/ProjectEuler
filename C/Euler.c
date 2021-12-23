@@ -1,6 +1,47 @@
 #include<stdio.h>
 
+/// -------------------------------------------------------------------
+/// Problem 1
+/// Multiples of 3 or 5
+/// -------------------------------------------------------------------
+/// If we list all the natural numbers below 10 that are multiples of
+/// 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+/// Find the sum of all the multiples of 3 or 5 below 1000.
+/// -------------------------------------------------------------------
+/// Returns: Solution for Project Euler #1
+/// -------------------------------------------------------------------
+int solveProblem0001()
+{
+    int sum = 0;
+    for (int i = 1; i < 1000; i++)
+    {
+        if (i % 3 == 0 || i % 5 == 0)
+        {
+            sum += i;
+        }
+    }
+    return sum;
+}
+
+/// -------------------------------------------------------------------
+/// Helpers
+/// -------------------------------------------------------------------
+static void writeResult(int problem, int result)
+{
+    printf("Problem %4d: %d.\n", problem, result);
+}
+
+/// -------------------------------------------------------------------
+/// Main method
+/// -------------------------------------------------------------------
 void main()
-{  
-    printf("TODO: solve Euler Project problems!");
+{
+    printf("===================================\n");
+    printf("Results for Euler Project problems:\n");
+    printf("-----------------------------------\n");
+
+    writeResult(1, solveProblem0001());
+    // Further problem solvers go here.
+
+    printf("===================================\n");
 }
