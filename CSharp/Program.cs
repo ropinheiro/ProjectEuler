@@ -13,7 +13,8 @@ namespace ProjectEuler
         {
             new ProblemInfo() { Number = 1, Title = "Multiples of 3 or 5", HasSlowResolution = false, ExpectedSolution = 233168 },
             new ProblemInfo() { Number = 2, Title = "Even Fibonacci numbers", HasSlowResolution = false, ExpectedSolution = 4613732 },
-            new ProblemInfo() { Number = 3, Title = "Largest prime factor", HasSlowResolution = true, ExpectedSolution = 6857 }
+            new ProblemInfo() { Number = 3, Title = "Largest prime factor", HasSlowResolution = true, ExpectedSolution = 6857 },
+            new ProblemInfo() { Number = 4, Title = "Largest palindrome product", HasSlowResolution = false, ExpectedSolution = 906609 }
         };
 
         static void Main(string[] args)
