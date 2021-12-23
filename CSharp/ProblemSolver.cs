@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace ProjectEuler
 {
@@ -55,13 +56,13 @@ namespace ProjectEuler
         /// </summary>
         /// <param name="problemNumber">A given problem number.</param>
         /// <returns>The solution of the problem.</returns>
-        private int InvokeSolverMethod(int problemNumber)
+        private long InvokeSolverMethod(int problemNumber)
         {
             MethodInfo solverMethod = this
                 .GetType()
                 .GetMethod($"SolveProblem{problemNumber.ToString().PadLeft(4, '0')}");
 
-            return (int)solverMethod.Invoke(this, null);
+            return (long)solverMethod.Invoke(this, null);
         }
 
         /// <summary>
@@ -75,10 +76,10 @@ namespace ProjectEuler
         /// -------------------------------------------------------------------
         /// </summary>
         /// <returns>Solution for Project Euler #1</returns>
-        public int SolveProblem0001()
+        public long SolveProblem0001()
         {
-            int sum = 0;
-            for (int i = 1; i < 1000; i++)
+            long sum = 0;
+            for (long i = 1; i < 1000; i++)
             {
                 if (i % 3 == 0 || i % 5 == 0)
                 {
@@ -101,12 +102,12 @@ namespace ProjectEuler
         /// -------------------------------------------------------------------
         /// </summary>
         /// <returns>Solution for Project Euler #2</returns>
-        public int SolveProblem0002()
+        public long SolveProblem0002()
         {
-            int sum = 0;
-            int previousValue1 = 0;
-            int previousValue2 = 1;
-            int currentValue = previousValue1 + previousValue2;
+            long sum = 0;
+            long previousValue1 = 0;
+            long previousValue2 = 1;
+            long currentValue = previousValue1 + previousValue2;
 
             while (currentValue < 4000000)
             {
@@ -121,6 +122,136 @@ namespace ProjectEuler
             }
 
             return sum;
+        }
+
+        /// <summary>
+        /// -------------------------------------------------------------------
+        /// Problem 3
+        /// Largest prime factor
+        /// -------------------------------------------------------------------
+        /// The prime factors of 13195 are 5, 7, 13 and 29.
+        /// What is the largest prime factor of the number 600851475143 ?
+        /// -------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Solution for Project Euler #3</returns>
+        public long SolveProblem0003()
+        {
+            long number = 600851475143;
+
+            // Strategy:
+
+            // PART 1 => start from 2 until M, where M << K (e.g. M = 10000)
+            //           until we hit a number N <= M for which K is divisible
+            //           if M is hit, then use N = M.
+
+            // PART 2 => now that we have N as the smallest number for which
+            //           K is visible, then we can search now from K/N until N
+            //           until we get a N < T < K/N value that will be the
+            //           greatest number for which K is visible.
+
+            // Note that below N and above K/N it is proved that there are no
+            // numbers for which K will be divisible, therefore, it is the
+            // shortest interval we can use for the search.
+
+            // Optimization notes:
+            // #1 - The number is odd, therefore, is not divisible by any even number.
+            // #2 - The number is does not end in 0 or 5, therefore, is not divisible by any number ending in 0 or 5.
+            // #3 - The number is not divisible by 3, therefore, not divisible by any multiple of 3.
+
+            // #########################
+            // ### STRATEGY - PART 1 ###
+            // #########################
+
+            // Why 7? See Hints #1, #2, #3.
+            long minorDivisibleNumber = 7;
+            long stopAt = 10000;
+            while (number % minorDivisibleNumber != 0 && minorDivisibleNumber <= stopAt)
+            {
+                // Why +2? See Hint #1. 
+                minorDivisibleNumber = minorDivisibleNumber + 2;
+            }
+            // DEBUG
+            // System.Console.WriteLine($"Stopped at: {minorDivisibleNumber}. ");
+
+
+            // #########################
+            // ### STRATEGY - PART 2 ###
+            // #########################
+
+            long currentTentative = number / minorDivisibleNumber;
+
+            // Why %2? See Hint #1.
+            currentTentative = (currentTentative % 2 == 0 ? currentTentative-- : currentTentative);
+
+            // Why skipFives? See Hint #2.
+            long skipFives = currentTentative % 5;
+            if (skipFives == 0)
+            {
+                currentTentative = currentTentative - 2;
+                skipFives = 4;
+            }
+            else
+            {
+                // We are "converting" the mod 5 to a sequence from
+                // 4 to 0 such that when reaching 0, skils the number
+                // because it currently ends in 5. Yeah, cumbersome,
+                // but it is a 20% improvement in the speed.
+                if (skipFives == 1) skipFives = 3;
+                else if (skipFives == 2) skipFives = 1;
+                else if (skipFives == 3) skipFives = 4;
+                else if (skipFives == 4) skipFives = 2;
+            }
+
+            // DEBUG
+            // var watch = new System.Diagnostics.Stopwatch();
+            // watch.Start();
+            // long iterations = 0;
+            // long count = 0;
+            // long step = 100000000;
+
+            // Worst case, we reach 1.
+            // That is guaranteed to cause the cycle to stop.
+            while (number % currentTentative != 0 || !IsPrime(currentTentative))
+            {
+                // Why -2? See Hint #1.
+                currentTentative = currentTentative - 2;
+
+                // Why skipFives? See Hint #2.
+                skipFives = skipFives - 1;
+                if (skipFives == 0)
+                {
+                    currentTentative = currentTentative - 2;
+                    skipFives = 4;
+                }
+
+                // DEBUG
+                // if (++iterations > step)
+                // {
+                //     iterations = 0;
+                //     count += step;
+                //     System.Console.WriteLine($"So far: {count} iterations, reached number {currentTentative} in {watch.ElapsedMilliseconds / 1000} s. ");
+                // }
+            }
+
+            // DEBUG
+            // watch.Stop();
+
+            return currentTentative;
+        }
+
+        public static bool IsPrime(long number)
+        {
+            if (number <= 1) return false;
+            if (number == 2) return true;
+            if (number % 2 == 0) return false;
+
+            var boundary = (long)Math.Floor(Math.Sqrt(number));
+
+            for (long i = 3; i <= boundary; i += 2)
+                if (number % i == 0)
+                    return false;
+
+            return true;
         }
     }
 }
