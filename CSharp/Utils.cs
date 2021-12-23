@@ -8,7 +8,26 @@ namespace ProjectEuler
     public static class Utils
     {
         /// <summary>
-        /// Checks if a given number is Prime.
+        /// Checks if a given number is palindrome.
+        /// Thanks to: CodeVsColor
+        /// Source: https://www.codevscolor.com/c-sharp-check-palindrome-number
+        /// </summary>
+        /// <param name="number">A given number.</param>
+        /// <returns>True if the given number is palindrome, false otherwise.</returns>
+        public static bool IsPalindrome(long number)
+        {
+            long tempValue = number;
+            long reverse = 0;
+            while (tempValue > 0)
+            {
+                reverse = reverse * 10 + tempValue % 10;
+                tempValue = tempValue / 10;
+            }
+            return reverse == number;
+        }
+
+        /// <summary>
+        /// Checks if a given number is prime.
         /// Thanks to: Soner Gönül
         /// Source: https://stackoverflow.com/a/15743238/1520915
         /// </summary>
