@@ -31,3 +31,16 @@ Build & Run:
 2. > `dotnet run`
 
 ---
+
+## Python
+
+My development environment:
+1. IDE: `Visual Studio Code`
+2. Add [Python plugin](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+3. Install [Python 3.9 or higher](https://www.python.org/downloads/)
+
+Build & Run: 
+1. Open a terminal window in the `~\Python\` sub-folder
+2. > `python Euler.py`
+
+---
