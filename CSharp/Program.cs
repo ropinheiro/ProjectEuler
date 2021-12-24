@@ -21,24 +21,40 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 8, Title = "Largest product in a series", HasSlowResolution = false, ExpectedSolution = 23514624000 },
         };
 
+        const int SeparatorNumberOfChars = 80;
+
         static void Main(string[] args)
         {
             ProblemSolver solver = new ProblemSolver();
-
             WriteHeader(solver);
-
             SolveProblems(solver);
+            WriteHeavySeparator();
         }
 
         static void WriteHeader(ProblemSolver solver)
         {
-            Console.WriteLine("================================================================");
+            WriteHeavySeparator();
             Console.WriteLine("Results for Euler Project problems:");
-            Console.WriteLine("----------------------------------------------------------------");
+            WriteLightSeparator();
             Console.WriteLine($"Found {solver.NumberOfProblemsSolved} problems solved.");
-            Console.WriteLine("----------------------------------------------------------------");
-            Console.WriteLine("  ID  |  Solution  | OK? |   Time   |  Title");
-            Console.WriteLine("----------------------------------------------------------------");
+            WriteLightSeparator();
+            Console.WriteLine("  ID  |   Solution   | OK? |   Time   |  Title");
+            WriteLightSeparator();
+        }
+
+        static void WriteSeparator(string character)
+        {
+            Console.WriteLine(string.Concat(Enumerable.Repeat(character, SeparatorNumberOfChars)));
+        }
+
+        static void WriteHeavySeparator()
+        {
+            WriteSeparator("=");
+        }
+
+        static void WriteLightSeparator()
+        {
+            WriteSeparator("-");
         }
 
         static void SolveProblems(ProblemSolver solver)
@@ -51,7 +67,6 @@ namespace ProjectEuler
                 SolutionInfo solution = solver.Solve(problem);
                 WriteResult(problem, solution);
             }
-            Console.WriteLine("================================================================");
         }
 
         static ProblemInfo GetProblemInfo(int problemNumber)
@@ -84,7 +99,7 @@ namespace ProjectEuler
                 problemSolutionText = solution.ProblemSolution.ToString();
             }
 
-            return problemSolutionText.PadLeft(9, ' ');
+            return problemSolutionText.PadLeft(11, ' ');
         }
 
         static string GetCorrectnessText(SolutionInfo solution)
