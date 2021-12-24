@@ -132,7 +132,7 @@ namespace ProjectEuler
 
                 if (useSecondsInstead)
                 {
-                    executionTimeText = (solution.ExecutionTimeInMs / 1000).ToString() + " s";
+                    executionTimeText = (solution.ExecutionTimeInMs / 1000).ToString() + " s ";
                 }
                 else
                 {
