@@ -16,6 +16,7 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 3, Title = "Largest prime factor", HasSlowResolution = true, ExpectedSolution = 6857 },
             new ProblemInfo() { Number = 4, Title = "Largest palindrome product", HasSlowResolution = false, ExpectedSolution = 906609 },
             new ProblemInfo() { Number = 5, Title = "Smallest multiple", HasSlowResolution = false, ExpectedSolution = 232792560 },
+            new ProblemInfo() { Number = 6, Title = "Sum square difference", HasSlowResolution = false, ExpectedSolution = 25164150 },
         };
 
         static void Main(string[] args)
