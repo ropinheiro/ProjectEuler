@@ -374,5 +374,43 @@ namespace ProjectEuler
 
             return (simpleSum * simpleSum) - squaresSum;
         }
+
+        /// <summary>
+        /// -------------------------------------------------------------------
+        /// Problem 7
+        /// 10001st prime
+        /// -------------------------------------------------------------------
+        /// By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13,
+        /// we can see that the 6th prime is 13.
+        /// What is the 10 001st prime number?
+        /// -------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Solution for Project Euler #7</returns>
+        public long SolveProblem0007()
+        {
+            // Optimization Hints:
+            // #1 - No odd numbers (all are divisible by 2)
+            // #2 - No numbers ending in 5 (all are divisible by 5)
+            //      (note: no need to use hint #2, fast enough)
+
+            long primeCount = 1;
+            long targetCount = 10001;
+            long currentPrime = 2;
+            long currentNumber = currentPrime + 1;
+
+            while (primeCount < targetCount)
+            {
+                if (Utils.IsPrime(currentNumber))
+                {
+                    currentPrime = currentNumber;
+                    primeCount++;
+                }
+
+                // Why 2? See Hint #1.
+                currentNumber = currentNumber + 2;
+            }
+
+            return currentPrime;
+        }
     }
 }
