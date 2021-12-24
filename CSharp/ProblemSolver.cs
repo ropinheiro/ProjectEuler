@@ -291,5 +291,53 @@ namespace ProjectEuler
 
             return largestPalindromeSoFar;
         }
+
+        /// <summary>
+        /// -------------------------------------------------------------------
+        /// Problem 5
+        /// Smallest multiple
+        /// -------------------------------------------------------------------
+        /// 2520 is the smallest number that can be divided by each of the
+        /// numbers from 1 to 10 without any remainder.
+        /// What is the smallest positive number that is evenly divisible by
+        /// all of the numbers from 1 to 20?
+        /// -------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Solution for Project Euler #5</returns>
+        public long SolveProblem0005()
+        {
+            // STRATEGY:
+            // - Search one mod at a time: first smallest number with mod 1 == 0,
+            //   then mod 2, then mod 3 ... until mod 20.
+            // - Step by the last smallest number, because e.g. if we have the
+            //   smallest number with mod 5, then only multiples of that
+            //   smallest number will be divisible by all numbers from 1 to 5.
+
+            // Note that we could start with:
+            //      long currentMinimum = 2520;
+            //      long currentModule = 11;
+            // ... as we already those values from the problem description,
+            // but this way the code is more generic.
+
+            long targetModule = 20;
+            long currentModule = 1;
+            long currentMinimum = 1;
+            long currentStep = currentMinimum;
+
+            while (currentModule <= targetModule)
+            {
+                if (currentMinimum % currentModule == 0)
+                {
+                    currentStep = currentMinimum;
+                    currentModule++;
+                }
+                else
+                {
+                    currentMinimum += currentStep;
+                }
+            }
+
+            return currentMinimum;
+        }
     }
 }
