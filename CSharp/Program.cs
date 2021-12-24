@@ -19,6 +19,7 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 6, Title = "Sum square difference", HasSlowResolution = false, ExpectedSolution = 25164150 },
             new ProblemInfo() { Number = 7, Title = "10001st prime", HasSlowResolution = false, ExpectedSolution = 104743 },
             new ProblemInfo() { Number = 8, Title = "Largest product in a series", HasSlowResolution = false, ExpectedSolution = 23514624000 },
+            new ProblemInfo() { Number = 9, Title = "Special Pythagorean triplet", HasSlowResolution = false, ExpectedSolution = 31875000 },
         };
 
         const int SeparatorNumberOfChars = 80;
