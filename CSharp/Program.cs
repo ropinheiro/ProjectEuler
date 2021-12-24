@@ -18,6 +18,7 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 5, Title = "Smallest multiple", HasSlowResolution = false, ExpectedSolution = 232792560 },
             new ProblemInfo() { Number = 6, Title = "Sum square difference", HasSlowResolution = false, ExpectedSolution = 25164150 },
             new ProblemInfo() { Number = 7, Title = "10001st prime", HasSlowResolution = false, ExpectedSolution = 104743 },
+            new ProblemInfo() { Number = 8, Title = "Largest product in a series", HasSlowResolution = false, ExpectedSolution = 23514624000 },
         };
 
         static void Main(string[] args)
