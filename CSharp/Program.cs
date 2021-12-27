@@ -21,6 +21,7 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 8, Title = "Largest product in a series", HasSlowResolution = false, ExpectedSolution = 23514624000 },
             new ProblemInfo() { Number = 9, Title = "Special Pythagorean triplet", HasSlowResolution = false, ExpectedSolution = 31875000 },
             new ProblemInfo() { Number = 10, Title = "Summation of primes", HasSlowResolution = false, ExpectedSolution = 142913828922 },
+            new ProblemInfo() { Number = 11, Title = "Largest product in a grid", HasSlowResolution = false, ExpectedSolution = 70600674 },
         };
 
         const int SeparatorNumberOfChars = 80;
