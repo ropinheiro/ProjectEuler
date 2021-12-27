@@ -24,6 +24,18 @@ namespace ProjectEuler
         };
 
         const int SeparatorNumberOfChars = 80;
+        const string LotsOfSpaces = "                                                    ";
+        const int CharsCountForID = 6;
+        const int CharsCountForSolution = 16;
+        const int CharsCountForStatus = 5;
+        const int CharsCountForTime = 10;
+
+        /// <summary>
+        /// The -1 is to account for the separator pipe between columns.
+        /// </summary>
+        const int CharsCountForTitle = SeparatorNumberOfChars
+                    - CharsCountForID - 1 - CharsCountForSolution - 1
+                    - CharsCountForStatus - 1 - CharsCountForTime - 1;
 
         static void Main(string[] args)
         {
@@ -40,7 +52,7 @@ namespace ProjectEuler
             WriteLightSeparator();
             Console.WriteLine($"Found {solver.NumberOfProblemsSolved} problems solved.");
             WriteLightSeparator();
-            Console.WriteLine("  ID  |   Solution   | OK? |   Time   |  Title");
+            WriteTableHeader();
             WriteLightSeparator();
         }
 
@@ -57,6 +69,35 @@ namespace ProjectEuler
         static void WriteLightSeparator()
         {
             WriteSeparator("-");
+        }
+
+        static void WriteTableHeader()
+        {
+            string headerID = GetCenteredText("ID", CharsCountForID);
+            string headerSolution = GetCenteredText("Solution", CharsCountForSolution);
+            string headerStatus = GetCenteredText("OK?", CharsCountForStatus);
+            string headerTime = GetCenteredText("Time", CharsCountForTime);
+            string headerTitle = GetCenteredText("Title", CharsCountForTitle);
+            Console.WriteLine($"{headerID}|{headerSolution}|{headerStatus}|{headerTime}|{headerTitle}");
+        }
+
+        static string GetCenteredText(string text, int size)
+        {
+            string auxHeader = $"{LotsOfSpaces}{text}{LotsOfSpaces}";
+            int spacesToRemove = auxHeader.Length - size;
+            return auxHeader.Substring((spacesToRemove / 2), size);
+        }
+
+        static string GetRightAlignedText(string text, int size)
+        {
+            string auxHeader = $"{LotsOfSpaces}{text} ";
+            int spacesToRemove = auxHeader.Length - size;
+            return auxHeader.Substring(spacesToRemove);
+        }
+
+        static string GetLeftAlignedText(string text, int size)
+        {
+            return $" {text}{LotsOfSpaces}".Substring(0, size);
         }
 
         static void SolveProblems(ProblemSolver solver)
@@ -80,28 +121,27 @@ namespace ProjectEuler
 
         static void WriteResult(ProblemInfo problem, SolutionInfo solution)
         {
-            string problemNumber = solution.ProblemNumber.ToString().PadLeft(4, ' ');
+            string problemNumber = GetRightAlignedText(solution.ProblemNumber.ToString(), CharsCountForID);
             string problemSolution = GetProblemSolutionText(solution);
             string correctness = GetCorrectnessText(solution);
             string executionTime = GetExecutionTimeText(solution);
+            string problemTitle = GetLeftAlignedText(problem.Title, CharsCountForTitle);
 
-            Console.WriteLine($"{problemNumber}  | {problemSolution}  | {correctness}  | {executionTime} | {problem.Title}");
+            Console.WriteLine($"{problemNumber}|{problemSolution}|{correctness}|{executionTime}|{problemTitle}");
         }
 
         static string GetProblemSolutionText(SolutionInfo solution)
         {
-            string problemSolutionText;
-
             if (solution.Skipped)
             {
-                problemSolutionText = "- SKIP -";
+                return GetCenteredText(
+                    "- SKIP - ", CharsCountForSolution);
             }
             else
             {
-                problemSolutionText = solution.ProblemSolution.ToString();
+                return GetRightAlignedText(
+                    solution.ProblemSolution.ToString(), CharsCountForSolution);
             }
-
-            return problemSolutionText.PadLeft(11, ' ');
         }
 
         static string GetCorrectnessText(SolutionInfo solution)
@@ -117,7 +157,7 @@ namespace ProjectEuler
                 correctnessText = solution.SolutionIsCorrect ? "V" : "X";
             }
 
-            return correctnessText.PadLeft(2, ' ');
+            return GetCenteredText(correctnessText, CharsCountForStatus);
         }
 
         static string GetExecutionTimeText(SolutionInfo solution)
@@ -142,7 +182,7 @@ namespace ProjectEuler
                 }
             }
 
-            return executionTimeText.PadLeft(8, ' ');
+            return GetRightAlignedText(executionTimeText, CharsCountForTime);
         }
     }
 }
