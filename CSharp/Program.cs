@@ -23,6 +23,7 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 10, Title = "Summation of primes", HasSlowResolution = false, ExpectedSolution = 142913828922 },
             new ProblemInfo() { Number = 11, Title = "Largest product in a grid", HasSlowResolution = false, ExpectedSolution = 70600674 },
             new ProblemInfo() { Number = 12, Title = "Highly divisible triangular number", HasSlowResolution = false, ExpectedSolution = 76576500 },
+            new ProblemInfo() { Number = 13, Title = "Large sum", HasSlowResolution = false, ExpectedSolution = 5537376230 },
         };
 
         const int SeparatorNumberOfChars = 80;
