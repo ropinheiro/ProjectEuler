@@ -973,5 +973,65 @@ namespace ProjectEuler
             // Ouch! Not found? :(
             return -1;
         }
+
+        /// <summary>
+        /// -------------------------------------------------------------------
+        /// Problem 14
+        /// Longest Collatz sequence
+        /// -------------------------------------------------------------------
+        /// The following iterative sequence is defined for the set of positive
+        /// integers:
+        ///            n → n/2    (n is even)
+        ///            n → 3n + 1 (n is odd)
+        ///                 
+        /// Using the rule above and starting with 13, we generate the
+        /// following sequence:
+        ///            13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+        ///                 
+        /// It can be seen that this sequence (starting at 13 and finishing at
+        /// 1) contains 10 terms. Although it has not been proved yet (Collatz
+        /// Problem), it is thought that all starting numbers finish at 1.
+        /// 
+        /// Which starting number, under 1.000.000, produces the longest chain?
+        /// Once the chain starts the terms are allowed to go above one million. 
+        /// -------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Solution for Project Euler #14</returns>
+        public long SolveProblem0014()
+        {
+            // Setup constants
+            const long startingNumber = 999999;
+            const long stoppingNumber = 1;
+            const long stoppingSequenceNumber = 1;
+
+            // Intermediate variables
+            long currentNumber = startingNumber;
+
+            // Conclusion variables
+            long greatestSequenceCount = 0;
+            long greatestSequenceNumber = 0;
+
+            while (currentNumber >= stoppingNumber)
+            {
+                long sequenceNumber = currentNumber;
+                long currentSequenceCount = 1;
+                while (sequenceNumber > stoppingSequenceNumber)
+                {
+                    // n → n/2    (n is even)
+                    // n → 3n + 1 (n is odd)
+                    sequenceNumber = (sequenceNumber % 2 == 0) ?
+                        sequenceNumber / 2 : (3 * sequenceNumber) + 1;
+                    currentSequenceCount++;
+                }
+                if (currentSequenceCount > greatestSequenceCount)
+                {
+                    greatestSequenceCount = currentSequenceCount;
+                    greatestSequenceNumber = currentNumber;
+                }
+                currentNumber--;
+            }
+
+            return greatestSequenceNumber;
+        }
     }
 }
