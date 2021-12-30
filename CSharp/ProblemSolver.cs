@@ -1033,5 +1033,57 @@ namespace ProjectEuler
 
             return greatestSequenceNumber;
         }
+
+        /// <summary>
+        /// -------------------------------------------------------------------
+        /// Problem 15
+        /// Lattice paths
+        /// -------------------------------------------------------------------
+        /// Starting in the top left corner of a 2×2 grid, and only being able
+        /// to move to the right and down, there are exactly 6 routes to the
+        /// bottom right corner.
+        /// 
+        /// How many such routes are there through a 20×20 grid?
+        /// 
+        /// Note: see https://projecteuler.net/problem=15 for a drawing.
+        /// -------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Solution for Project Euler #15</returns>
+        public long SolveProblem0015()
+        {
+            // Setup constants
+            const int gridSideInSquares = 20;
+
+            return SolveProblem0015_CountPaths(0, 0, gridSideInSquares);
+        }
+
+        private long SolveProblem0015_CountPaths(int x, int y, int gridSideInSquares)
+        {
+            long countPaths = 0;
+
+            // We reached the bottom-right corner, so stop the search and
+            // count one valid path.
+            if (x == y && x == gridSideInSquares)
+            {
+                countPaths = 1;
+            }
+            // Otherwise, there are more paths to follow (and count)
+            else
+            {
+                // Try a path to the right if we didn't reach the right border.
+                if (x < gridSideInSquares)
+                {
+                    countPaths += SolveProblem0015_CountPaths(
+                        x + 1, y, gridSideInSquares);
+                }
+                // Try a path to the bottom if we didn't reach the bottom border.
+                if (y < gridSideInSquares)
+                {
+                    countPaths += SolveProblem0015_CountPaths(
+                        x, y + 1, gridSideInSquares);
+                }
+            }
+            return countPaths;
+        }
     }
 }

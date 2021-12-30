@@ -11,20 +11,21 @@ namespace ProjectEuler
         /// </summary>
         static List<ProblemInfo> ProblemDefinitions = new List<ProblemInfo>()
         {
-            new ProblemInfo() { Number = 1, Title = "Multiples of 3 or 5", HasSlowResolution = false, ExpectedSolution = 233168 },
-            new ProblemInfo() { Number = 2, Title = "Even Fibonacci numbers", HasSlowResolution = false, ExpectedSolution = 4613732 },
-            new ProblemInfo() { Number = 3, Title = "Largest prime factor", HasSlowResolution = true, ExpectedSolution = 6857 },
-            new ProblemInfo() { Number = 4, Title = "Largest palindrome product", HasSlowResolution = false, ExpectedSolution = 906609 },
-            new ProblemInfo() { Number = 5, Title = "Smallest multiple", HasSlowResolution = false, ExpectedSolution = 232792560 },
-            new ProblemInfo() { Number = 6, Title = "Sum square difference", HasSlowResolution = false, ExpectedSolution = 25164150 },
-            new ProblemInfo() { Number = 7, Title = "10001st prime", HasSlowResolution = false, ExpectedSolution = 104743 },
-            new ProblemInfo() { Number = 8, Title = "Largest product in a series", HasSlowResolution = false, ExpectedSolution = 23514624000 },
-            new ProblemInfo() { Number = 9, Title = "Special Pythagorean triplet", HasSlowResolution = false, ExpectedSolution = 31875000 },
+            new ProblemInfo() { Number =  1, Title = "Multiples of 3 or 5", HasSlowResolution = false, ExpectedSolution = 233168 },
+            new ProblemInfo() { Number =  2, Title = "Even Fibonacci numbers", HasSlowResolution = false, ExpectedSolution = 4613732 },
+            new ProblemInfo() { Number =  3, Title = "Largest prime factor", HasSlowResolution = true, ExpectedSolution = 6857 },
+            new ProblemInfo() { Number =  4, Title = "Largest palindrome product", HasSlowResolution = false, ExpectedSolution = 906609 },
+            new ProblemInfo() { Number =  5, Title = "Smallest multiple", HasSlowResolution = false, ExpectedSolution = 232792560 },
+            new ProblemInfo() { Number =  6, Title = "Sum square difference", HasSlowResolution = false, ExpectedSolution = 25164150 },
+            new ProblemInfo() { Number =  7, Title = "10001st prime", HasSlowResolution = false, ExpectedSolution = 104743 },
+            new ProblemInfo() { Number =  8, Title = "Largest product in a series", HasSlowResolution = false, ExpectedSolution = 23514624000 },
+            new ProblemInfo() { Number =  9, Title = "Special Pythagorean triplet", HasSlowResolution = true, ExpectedSolution = 31875000 },
             new ProblemInfo() { Number = 10, Title = "Summation of primes", HasSlowResolution = false, ExpectedSolution = 142913828922 },
             new ProblemInfo() { Number = 11, Title = "Largest product in a grid", HasSlowResolution = false, ExpectedSolution = 70600674 },
-            new ProblemInfo() { Number = 12, Title = "Highly divisible triangular number", HasSlowResolution = false, ExpectedSolution = 76576500 },
-            new ProblemInfo() { Number = 13, Title = "Large sum", HasSlowResolution = false, ExpectedSolution = 5537376230 },
-            new ProblemInfo() { Number = 14, Title = "Longest Collatz sequence", HasSlowResolution = false, ExpectedSolution = 837799 },
+            new ProblemInfo() { Number = 12, Title = "Highly divisible triangular number", HasSlowResolution = true, ExpectedSolution = 76576500 },
+            new ProblemInfo() { Number = 13, Title = "Large sum", HasSlowResolution = true, ExpectedSolution = 5537376230 },
+            new ProblemInfo() { Number = 14, Title = "Longest Collatz sequence", HasSlowResolution = true, ExpectedSolution = 837799 },
+            new ProblemInfo() { Number = 15, Title = "Lattice paths", HasSlowResolution = true, ExpectedSolution = 137846528820 },
         };
 
         const int SeparatorNumberOfChars = 80;
