@@ -25,7 +25,7 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 12, Title = "Highly divisible triangular number", HasSlowResolution = true, ExpectedSolution = 76576500 },
             new ProblemInfo() { Number = 13, Title = "Large sum", HasSlowResolution = true, ExpectedSolution = 5537376230 },
             new ProblemInfo() { Number = 14, Title = "Longest Collatz sequence", HasSlowResolution = true, ExpectedSolution = 837799 },
-            new ProblemInfo() { Number = 15, Title = "Lattice paths", HasSlowResolution = true, ExpectedSolution = 137846528820 },
+            new ProblemInfo() { Number = 15, Title = "Lattice paths", HasSlowResolution = false, ExpectedSolution = 137846528820 },
         };
 
         const int SeparatorNumberOfChars = 80;

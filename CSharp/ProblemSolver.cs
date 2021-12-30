@@ -1039,6 +1039,52 @@ namespace ProjectEuler
         /// Problem 15
         /// Lattice paths
         /// -------------------------------------------------------------------
+        /// (OLD SOLUTION - See below a new one, more optimized)
+        /// -------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Solution for Project Euler #15</returns>
+        // public long SolveProblem0015()
+        // {
+        //     // Setup constants
+        //     const int gridSideInSquares = 20;
+
+        //     return SolveProblem0015_CountPaths(0, 0, gridSideInSquares);
+        // }
+
+        // private long SolveProblem0015_CountPaths(int x, int y, int gridSideInSquares)
+        // {
+        //     long countPaths = 0;
+
+        //     // We reached the bottom-right corner, so stop the search and
+        //     // count one valid path.
+        //     if (x == y && x == gridSideInSquares)
+        //     {
+        //         countPaths = 1;
+        //     }
+        //     // Otherwise, there are more paths to follow (and count)
+        //     else
+        //     {
+        //         // Try a path to the right if we didn't reach the right border.
+        //         if (x < gridSideInSquares)
+        //         {
+        //             countPaths += SolveProblem0015_CountPaths(
+        //                 x + 1, y, gridSideInSquares);
+        //         }
+        //         // Try a path to the bottom if we didn't reach the bottom border.
+        //         if (y < gridSideInSquares)
+        //         {
+        //             countPaths += SolveProblem0015_CountPaths(
+        //                 x, y + 1, gridSideInSquares);
+        //         }
+        //     }
+        //     return countPaths;
+        // }
+
+        /// <summary>
+        /// -------------------------------------------------------------------
+        /// Problem 15
+        /// Lattice paths
+        /// -------------------------------------------------------------------
         /// Starting in the top left corner of a 2×2 grid, and only being able
         /// to move to the right and down, there are exactly 6 routes to the
         /// bottom right corner.
@@ -1054,36 +1100,13 @@ namespace ProjectEuler
             // Setup constants
             const int gridSideInSquares = 20;
 
-            return SolveProblem0015_CountPaths(0, 0, gridSideInSquares);
-        }
+            // Formula: (h + w)! / (h! * w!)
+            // Where h is the height and w is the width in number of squares.
+            // For this problem we can use h == w == gridSideInSquares
 
-        private long SolveProblem0015_CountPaths(int x, int y, int gridSideInSquares)
-        {
-            long countPaths = 0;
-
-            // We reached the bottom-right corner, so stop the search and
-            // count one valid path.
-            if (x == y && x == gridSideInSquares)
-            {
-                countPaths = 1;
-            }
-            // Otherwise, there are more paths to follow (and count)
-            else
-            {
-                // Try a path to the right if we didn't reach the right border.
-                if (x < gridSideInSquares)
-                {
-                    countPaths += SolveProblem0015_CountPaths(
-                        x + 1, y, gridSideInSquares);
-                }
-                // Try a path to the bottom if we didn't reach the bottom border.
-                if (y < gridSideInSquares)
-                {
-                    countPaths += SolveProblem0015_CountPaths(
-                        x, y + 1, gridSideInSquares);
-                }
-            }
-            return countPaths;
+            double factorial1 = Utils.Factorial(2 * gridSideInSquares);
+            double factorial2 = Utils.Factorial(gridSideInSquares);
+            return (long)(factorial1 / (factorial2 * factorial2));
         }
     }
 }

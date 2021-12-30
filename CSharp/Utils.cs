@@ -8,6 +8,20 @@ namespace ProjectEuler
     public static class Utils
     {
         /// <summary>
+        /// Calculates the factorial of a given number n.
+        /// F(n) = n * (n-1) * (n-2) * ... * 1
+        /// </summary>
+        /// <param name="n">A given number n.</param>
+        /// <returns>The factorial of n.</returns>
+        public static double Factorial(double n)
+        {
+            if (n <= 1)
+                return 1;
+
+            return n * Factorial(n - 1);
+        }
+
+        /// <summary>
         /// Get the maximum number of parts we can divide a big number, given a part size.
         /// </summary>
         /// <param name="number">A positive integer number inside a string.</param>
