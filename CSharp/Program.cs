@@ -23,7 +23,7 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 10, Title = "Summation of primes", HasSlowResolution = false, ExpectedSolution = 142913828922 },
             new ProblemInfo() { Number = 11, Title = "Largest product in a grid", HasSlowResolution = false, ExpectedSolution = 70600674 },
             new ProblemInfo() { Number = 12, Title = "Highly divisible triangular number", HasSlowResolution = true, ExpectedSolution = 76576500 },
-            new ProblemInfo() { Number = 13, Title = "Large sum", HasSlowResolution = true, ExpectedSolution = 5537376230 },
+            new ProblemInfo() { Number = 13, Title = "Large sum", HasSlowResolution = false, ExpectedSolution = 5537376230 },
             new ProblemInfo() { Number = 14, Title = "Longest Collatz sequence", HasSlowResolution = true, ExpectedSolution = 837799 },
             new ProblemInfo() { Number = 15, Title = "Lattice paths", HasSlowResolution = false, ExpectedSolution = 137846528820 },
         };

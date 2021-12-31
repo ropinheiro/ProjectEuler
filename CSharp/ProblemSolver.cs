@@ -779,27 +779,8 @@ namespace ProjectEuler
         /// <returns>Solution for Project Euler #13</returns>
         public long SolveProblem0013()
         {
-            // Strategy:
-            // 1. 50-digit numbers do not fit in a long.
-            //    A long has a maximum of 19 digits.
-            // 2. We will use an array of K longs for each 10-digit part.
-            //    Imagine K=3. Then each part will be responsible for:
-            //    sums[0] -> xxxxxxxxxx xxxxxxxxxx 0000000000 to xxxxxxxxxx xxxxxxxxxx 9999999999
-            //    sums[1] -> xxxxxxxxxx 0000000000 xxxxxxxxxx to xxxxxxxxxx 9999999999 xxxxxxxxxx
-            //    sums[2] -> 0000000000 xxxxxxxxxx xxxxxxxxxx to 9999999999 xxxxxxxxxx xxxxxxxxxx
-            // 3. We could try not to force some maximum K. But mathematically
-            //    we know that adding 50-digit numbers 100 times will need
-            //    at least K=6 (imagine 50-digit numbers all 9's, times 100.
-            //    the result will be a 52-digit number with 50 9's and 2 0's).
-            // 4. When doing sums, we first sum the last 10 digits, then the
-            //    sum will be either 10 or 11 digits. Fill part[0] with the
-            //    last 10 digits. If we have a 11th digit, sum it with the
-            //    next 10-digit pair, and so on, until we reach the most
-            //    significant digits of each number pair.
-
             int targetFirstDigitCount = 10;
             int sumParts = 6;  // number of parts we will consider for the sum.
-            int partSize = 10; // number of digits in each part.
 
             string[] numbers = new string[]
             {
@@ -905,73 +886,16 @@ namespace ProjectEuler
                 "53503534226472524250874054075591789781264330331690"
             };
 
-            // Calculate the sum parts according to the strategy described
-            // above. We sum each entry at a time, shifting, if any, the
-            // most signficant digit in each iteration to the next sum part.
-            long[] sums = new long[sumParts];
-            for (int i = 0; i < sums.Length; i++)
-            {
-                sums[i] = 0;
-            }
+            BigInteger bigInteger = new BigInteger(sumParts);
 
             foreach (string number in numbers)
             {
-                int maxParts = Utils.GetMaxPartsOfNumber(number, partSize);
-                for (int part = 1; part <= maxParts; part++)
-                {
-                    long numberPart = Utils.GetPartOfNumber(number, part, partSize);
-                    long auxSum = sums[part - 1] + numberPart;
-                    string auxSumString = auxSum.ToString();
-                    long auxMostSignificantDigit = 0;
-
-                    // If our auxiliar sum got bigger than partSize, then we need
-                    // to split the most significat digit from the remaining number.
-                    if (auxSumString.Length > partSize)
-                    {
-                        auxMostSignificantDigit = long.Parse(auxSumString.Substring(0, 1));
-                        auxSum = long.Parse(auxSumString.Substring(1));
-                    }
-
-                    int currentPartPosition = part - 1;
-                    int nextPartPosition = part;
-                    sums[currentPartPosition] = auxSum;
-                    sums[nextPartPosition] += auxMostSignificantDigit;
-                }
+                bigInteger.Sum(number);
             }
 
             // Finally, get the targetFirstDigitCount digits of the sum.
-            // This code will start from the last part, searching for the first
-            // significat digit, then gets the requested digits starting from
-            // that point (even if spanning multiple parts).
-            string firstDigits = "";
-            bool alreadyFoundFirstSignificantDigit = false;
-            for (int sumPartPosition = sumParts - 1; sumPartPosition >= 0; sumPartPosition--)
-            {
-                string sumPart = sums[sumPartPosition].ToString()
-                    .PadLeft(partSize, '0'); // This is needed so that parts
-                                             // with zeros located in the most
-                                             // significant positions also count.
-
-                // Console.WriteLine($"Sum Part {sumPartPosition + 1}: {sumPart}");
-                foreach (char digit in sumPart)
-                {
-                    if (alreadyFoundFirstSignificantDigit == false && digit != '0')
-                    {
-                        alreadyFoundFirstSignificantDigit = true;
-                    }
-                    if (alreadyFoundFirstSignificantDigit == true)
-                    {
-                        firstDigits += digit;
-                        if (firstDigits.Length == targetFirstDigitCount)
-                        {
-                            return long.Parse(firstDigits);
-                        }
-                    }
-                }
-            }
-
-            // Ouch! Not found? :(
-            return -1;
+            string fullNumber = bigInteger.GetNumber();
+            return long.Parse(fullNumber.Substring(0, targetFirstDigitCount));
         }
 
         /// <summary>
