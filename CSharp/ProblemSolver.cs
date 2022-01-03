@@ -1032,5 +1032,44 @@ namespace ProjectEuler
             double factorial2 = Utils.Factorial(gridSideInSquares);
             return (long)(factorial1 / (factorial2 * factorial2));
         }
+
+        /// <summary>
+        /// -------------------------------------------------------------------
+        /// Problem 16
+        /// Power digit sum
+        /// -------------------------------------------------------------------
+        /// 2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+        /// What is the sum of the digits of the number 2^1000?
+        /// -------------------------------------------------------------------
+        /// </summary>
+        /// <returns>Solution for Project Euler #16</returns>
+        public long SolveProblem0016()
+        {
+
+            int finalPower = 1000;
+            int baseNumber = 2;
+            int sumParts = 350;  // number of parts we will consider for the sum.
+
+            // Why 350 parts? Well, I listed the powers of 2 from 2^0 to 2^16.
+            // Every 3 or 4 powers, the number of digits increased by one.
+            // Not sure if this pattern continues in the next 1000 powers.
+            // But assuming the worst case (1 new digit in the power value
+            // every 3 powers of 2), then in 1000 powers we will have about
+            // 333 digits. I just rounded up to 350.
+
+            // We initialize with 1 because we will accumulate multiplications.
+            BigInteger bigInteger = new BigInteger(sumParts, "1");
+
+            // Cycle through all multiplications needed to multiply the
+            // current number by the baseNumber a finalPower number of times.
+            for (int power = 1; power <= finalPower; power++)
+            {
+                bigInteger.Multiply(baseNumber);
+            }
+
+            // At this point we have the value of basePower to the finalPower
+            // power. Let's sum all its digits.
+            return bigInteger.GetNumber().Where(c => c != '0').Sum(c => (int)(c - '0'));
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace ProjectEuler
             new ProblemInfo() { Number = 13, Title = "Large sum", HasSlowResolution = false, ExpectedSolution = 5537376230 },
             new ProblemInfo() { Number = 14, Title = "Longest Collatz sequence", HasSlowResolution = true, ExpectedSolution = 837799 },
             new ProblemInfo() { Number = 15, Title = "Lattice paths", HasSlowResolution = false, ExpectedSolution = 137846528820 },
+            new ProblemInfo() { Number = 16, Title = "Power digit sum", HasSlowResolution = false, ExpectedSolution = 1366 },
         };
 
         const int SeparatorNumberOfChars = 80;

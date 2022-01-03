@@ -81,6 +81,30 @@ namespace ProjectEuler
         }
 
         /// <summary>
+        /// Multiply a given (integer) number with the current stored (big) integer,
+        /// and then store the result.
+        /// </summary>
+        /// <param name="number">A given integer number</param>
+        public void Multiply(int number)
+        {
+            long remainingPart = 0;
+            for (int part = 1; part <= bigNumberParts.Length; part++)
+            {
+                int currentPartPosition = part - 1;
+
+                // We are multiplying a 10-digit long by a int, so we can be sure
+                // that the result will always fit a long.
+                long auxMultiplication = (number * bigNumberParts[currentPartPosition]) + remainingPart;
+
+                // Now we extract the part that stays (the right part) and the
+                // remaining "rest" that will be summed to the next calculation.
+                long rightPart = GetPartOfNumber(auxMultiplication.ToString(), 1, numberOfDigitsPerPart);
+                remainingPart = (auxMultiplication - rightPart) / (long)Math.Pow(10, numberOfDigitsPerPart);
+                bigNumberParts[currentPartPosition] = rightPart;
+            }
+        }
+
+        /// <summary>
         /// Gets the complete (big) integer. 
         /// </summary>
         /// <returns>The (big) integer as a string.</returns>
