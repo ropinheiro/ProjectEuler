@@ -1,3 +1,5 @@
+from utils import isPrime;
+
 # -------------------------------------------------------------------
 # Problem Solvers
 # -------------------------------------------------------------------
@@ -47,6 +49,53 @@ def solveProblem0002():
     return sum;
 
 # -------------------------------------------------------------------
+# Problem 3
+# Largest prime factor
+# -------------------------------------------------------------------
+# The prime factors of 13195 are 5, 7, 13 and 29.
+# What is the largest prime factor of the number 600851475143 ?
+# Note: see strategy details in the C# version
+# -------------------------------------------------------------------
+# Returns: Solution for Project Euler #3
+# -------------------------------------------------------------------
+def solveProblem0003():
+    number = 600851475143;
+ 
+    minorDivisibleNumber = 7;
+    stopAt = 10000;
+    while number % minorDivisibleNumber != 0 and minorDivisibleNumber <= stopAt:
+        minorDivisibleNumber = minorDivisibleNumber + 2;
+
+    currentTentative = number / minorDivisibleNumber;
+
+    if currentTentative % 2 == 0:
+        currentTentative -= 1;
+
+    skipFives = currentTentative % 5;
+
+    if skipFives == 0:
+        currentTentative = currentTentative - 2;
+        skipFives = 4;
+    else:
+        if skipFives == 1:
+            skipFives = 3;
+        elif skipFives == 2:
+            skipFives = 1;
+        elif skipFives == 3:
+            skipFives = 4;
+        elif skipFives == 4:
+            skipFives = 2;
+
+    while number % currentTentative != 0 or isPrime(currentTentative) == False:
+        currentTentative = currentTentative - 2;
+        skipFives = skipFives - 1;
+        if skipFives == 0:
+            currentTentative = currentTentative - 2;
+            skipFives = 4;
+
+    return currentTentative;
+
+# -------------------------------------------------------------------
 # Helpers
 # -------------------------------------------------------------------
 def writeResult(problem, result):
@@ -62,6 +111,7 @@ print("-----------------------------------");
 
 writeResult(1, solveProblem0001());
 writeResult(2, solveProblem0002());
+# writeResult(3, solveProblem0003()); # SLOW!
 # Further problem solvers go here.
 
 print("===================================");
