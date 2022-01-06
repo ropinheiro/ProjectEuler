@@ -30,6 +30,19 @@ Build & Run:
 1. Open a terminal window in the `~\CSharp\` sub-folder
 2. > `dotnet run`
 
+--- 
+
+## Go
+
+My development environment:
+1. IDE: `Visual Studio Code`
+2. Add [Go](https://marketplace.visualstudio.com/items?itemName=golang.go)
+3. Install [Go 1.17.5 or higher](https://go.dev/dl/) (to get `go`)
+
+Build & Run: 
+1. Open a terminal window in the `~\Go\` sub-folder
+2. > `go run Euler.go`
+
 ---
 
 ## Python
