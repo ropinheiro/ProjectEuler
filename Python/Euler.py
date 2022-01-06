@@ -1,4 +1,4 @@
-from utils import isPrime;
+from utils import isPrime, writeResult;
 
 # -------------------------------------------------------------------
 # Problem Solvers
@@ -94,13 +94,6 @@ def solveProblem0003():
             skipFives = 4;
 
     return currentTentative;
-
-# -------------------------------------------------------------------
-# Helpers
-# -------------------------------------------------------------------
-def writeResult(problem, result):
-    paddedNumber = "{}".format(problem).rjust(4, ' ');
-    print("Problem {}: {}.".format(paddedNumber, result));
 
 # -------------------------------------------------------------------
 # Main

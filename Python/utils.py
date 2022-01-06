@@ -17,3 +17,7 @@ def isPrime(number):
         i += 2;
 
     return True;
+
+def writeResult(problem, result):
+    paddedNumber = "{}".format(problem).rjust(4, ' ');
+    print("Problem {}: {}.".format(paddedNumber, result));
